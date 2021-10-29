@@ -22,12 +22,13 @@ jobs:
       #    repository: 'http://shamusworld.gotdns.org/git/rmac'
 
       # Runs a set of commands using the runners shell
-      - name: Prepare binaries folder
+      #- name: Prepare binaries folder
+      - name: Do the work
         run: |
           git clone http://shamusworld.gotdns.org/git/rmac
+          ls -la
           mkdir output
-      - name: Build the thing
-        run: |
+          ls -la
           make -j 2
           strip rmac
           mv rmac output
