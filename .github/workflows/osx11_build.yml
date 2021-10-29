@@ -24,7 +24,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Prepare binaries folder
         run: |
-          git checkout http://shamusworld.gotdns.org/git/rmac
+          git clone http://shamusworld.gotdns.org/git/rmac
           mkdir output
       - name: Build the thing
         run: |
