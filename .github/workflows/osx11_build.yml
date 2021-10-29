@@ -35,7 +35,7 @@ jobs:
           mv rmac output
       - name: zip outputs
         run: |
-          cd output
+          cd rmac/output
           zip -r rmac-osx-11.zip rmac
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v2
