@@ -1,0 +1,41 @@
+# Macos Build
+
+name: rmac-build
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build_osx_11:
+    # The type of runner that the job will run on
+    runs-on: macos-11
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          repository: 'http://shamusworld.gotdns.org/git/rmac'
+
+      # Runs a set of commands using the runners shell
+      - name: Prepare binaries folder
+        run: |
+          mkdir output
+      - name: Build the thing
+        run: |
+          make -j 2
+          strip rmac
+          mv rmac output
+      - name: zip outputs
+        run: |
+          cd output
+          zip -r rmac-osx-11.zip rmac
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v2
+        with:
+          name: rmac-osx-11-${{ github.sha }}
+          path: output/rmac-osx-11.zip
