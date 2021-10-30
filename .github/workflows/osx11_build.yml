@@ -40,5 +40,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: rmac-osx-11-${{ github.sha }}
-          path: rmac/output/rmac-osx-11.zip
-          path: rmac/output/rln-osx-11.zip
+          path: rmac/output/*.zip
