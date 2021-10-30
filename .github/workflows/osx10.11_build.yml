@@ -12,7 +12,7 @@ jobs:
   # This workflow contains a single job called "build"
   build_osx_11:
     # The type of runner that the job will run on
-    runs-on: macos-11
+    runs-on: macos-10.11
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -34,11 +34,11 @@ jobs:
       - name: zip outputs
         run: |
           cd rmac/output
-          zip -r rmac-osx-11.zip rmac
-          zip -r rln-osx-11.zip rln
+          zip -r rmac-osx-10.11.zip rmac
+          zip -r rln-osx-10.11.zip rln
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v2
         with:
-          name: rmac-osx-11-${{ github.sha }}
-          path: rmac/output/rmac-osx-11.zip
-          path: rmac/output/rln-osx-11.zip
+          name: rmac-osx-10.11-${{ github.sha }}
+          path: rmac/output/rmac-osx-10.11.zip
+          path: rmac/output/rln-osx-10.11.zip
