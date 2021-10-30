@@ -1,6 +1,6 @@
 # Macos Build
 
-name: rmac-build-osx11
+name: rmac-build-osx10.11
 
 # Controls when the workflow will run
 on:
