@@ -22,13 +22,13 @@ jobs:
           git clone http://shamusworld.gotdns.org/git/rmac
           cd rmac
           mkdir output
-          make -j 2
+          make -j 3
           strip rmac
           mv rmac output
           cd ..
           git clone http://shamusworld.gotdns.org/git/rln
           cd rln
-          make -j 2
+          make -j 3
           strip rln
           mv rln ../rmac/output
       - name: zip outputs
@@ -39,5 +39,5 @@ jobs:
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v2
         with:
-          name: rmac-osx-11-${{ github.sha }}
+          name: rmac_rln-osx-11-${{ github.sha }}
           path: rmac/output/*.zip
