@@ -24,6 +24,7 @@ jobs:
           mkdir output
           # Apply the secret sauce
           sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
+          sed -i -e "s/\$(HOSTCC) \$(CFLAGS)/\$(HOSTCC)/g" makefile
           make -j 3
           strip rmac
           mv rmac output
