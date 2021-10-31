@@ -22,12 +22,15 @@ jobs:
           git clone http://shamusworld.gotdns.org/git/rmac
           cd rmac
           mkdir output
+          # Apply the secret sauce
+          sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
           make -j 3
           strip rmac
           mv rmac output
           cd ..
           git clone http://shamusworld.gotdns.org/git/rln
           cd rln
+          sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
           make -j 3
           strip rln
           mv rln ../rmac/output
