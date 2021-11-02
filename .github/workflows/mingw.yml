@@ -23,7 +23,6 @@ jobs:
       - name: "Build all the things"
         shell: msys2 {0}
         run: |
-          ls -la /mingw64/bin/
           git clone http://shamusworld.gotdns.org/git/rmac
           git clone http://shamusworld.gotdns.org/git/rln
           mkdir output
