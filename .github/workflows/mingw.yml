@@ -17,7 +17,6 @@ jobs:
         with:
           msystem: ${{ matrix.msystem }}
           install: VCS base-devel binutils pactoys-git ${{ matrix.toolchain }}
-          update: true
         - name: Add staging repo
         shell: msys2 {0}
         run: |
