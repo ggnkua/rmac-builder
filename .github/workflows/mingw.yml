@@ -1,0 +1,44 @@
+name: rmac-build-mingw
+on:
+  workflow_dispatch:
+jobs:
+  build_mingw:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: [
+          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, can-fail: false },
+          { msystem: MINGW32, toolchain: mingw-w64-i686-toolchain, can-fail: false },
+        ]
+    name: ${{ matrix.msystem }}
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          install: VCS base-devel binutils pactoys-git ${{ matrix.toolchain }}
+          update: true
+        - name: Add staging repo
+        shell: msys2 {0}
+        run: |
+          git clone http://shamusworld.gotdns.org/git/rmac
+          git clone http://shamusworld.gotdns.org/git/rln
+          mkdir output
+          cd rmac
+          make -j2
+          strip rmac.exe
+          mv rmac.exe ../output
+          cd ../rln
+          make -j2
+          strip rln.exe
+          mv rln.exe ../output
+      - name: zip outputs
+        run: |
+          cd output
+          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v2
+        with:
+          name: rmac_rln-osx-10.15-${{ github.sha }}
+          path: output/*.zip
+
