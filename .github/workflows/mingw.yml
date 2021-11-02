@@ -19,7 +19,7 @@ jobs:
           msystem: ${{ matrix.msystem }}
           install: VCS base-devel binutils pactoys-git ${{ matrix.toolchain }}
 
-      - name: Build all the things
+      - name: "Build all the things"
         shell: msys2 {0}
         run: |
           git clone http://shamusworld.gotdns.org/git/rmac
