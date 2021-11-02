@@ -23,6 +23,7 @@ jobs:
       - name: "Build all the things"
         shell: msys2 {0}
         run: |
+          ls -la /mingw64/bin/
           git clone http://shamusworld.gotdns.org/git/rmac
           git clone http://shamusworld.gotdns.org/git/rln
           mkdir output
@@ -38,6 +39,7 @@ jobs:
           mv rln.exe ../output
 
       - name: zip outputs
+        shell: msys2 {0}
         run: |
           cd output
           zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
