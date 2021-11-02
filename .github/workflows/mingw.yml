@@ -20,19 +20,19 @@ jobs:
           install: VCS base-devel binutils pactoys-git ${{ matrix.toolchain }}
 
       - name: Build all the things
-      shell: msys2 {0}
-      run: |
-        git clone http://shamusworld.gotdns.org/git/rmac
-        git clone http://shamusworld.gotdns.org/git/rln
-        mkdir output
-        cd rmac
-        make -j2
-        strip rmac.exe
-        mv rmac.exe ../output
-        cd ../rln
-        make -j2
-        strip rln.exe
-        mv rln.exe ../output
+        shell: msys2 {0}
+        run: |
+          git clone http://shamusworld.gotdns.org/git/rmac
+          git clone http://shamusworld.gotdns.org/git/rln
+          mkdir output
+          cd rmac
+          make -j2
+          strip rmac.exe
+          mv rmac.exe ../output
+          cd ../rln
+          make -j2
+          strip rln.exe
+          mv rln.exe ../output
 
       - name: zip outputs
         run: |
