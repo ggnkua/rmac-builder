@@ -17,7 +17,7 @@ jobs:
       - uses: msys2/setup-msys2@v2
         with:
           msystem: ${{ matrix.msystem }}
-          install: zip VCS binutils pactoys-git ${{ matrix.gcc_name }}
+          install: zip VCS binutils pactoys-git ${{ matrix.gcc_name }} make
           #${{ matrix.toolchain }} base-devel 
 
       - name: "Build all the things"
