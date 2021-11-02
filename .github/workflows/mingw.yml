@@ -19,29 +19,29 @@ jobs:
           msystem: ${{ matrix.msystem }}
           install: VCS base-devel binutils pactoys-git ${{ matrix.toolchain }}
 
-        - name: Add staging repo
-        shell: msys2 {0}
+      - name: Build all the things
+      shell: msys2 {0}
+      run: |
+        git clone http://shamusworld.gotdns.org/git/rmac
+        git clone http://shamusworld.gotdns.org/git/rln
+        mkdir output
+        cd rmac
+        make -j2
+        strip rmac.exe
+        mv rmac.exe ../output
+        cd ../rln
+        make -j2
+        strip rln.exe
+        mv rln.exe ../output
+
+      - name: zip outputs
         run: |
-          git clone http://shamusworld.gotdns.org/git/rmac
-          git clone http://shamusworld.gotdns.org/git/rln
-          mkdir output
-          cd rmac
-          make -j2
-          strip rmac.exe
-          mv rmac.exe ../output
-          cd ../rln
-          make -j2
-          strip rln.exe
-          mv rln.exe ../output
+          cd output
+          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
 
-        - name: zip outputs
-          run: |
-            cd output
-            zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
-
-        - name: "Upload artifacts"
-          uses: actions/upload-artifact@v2
-          with:
-            name: rmac_rln-osx-10.15-${{ github.sha }}
-            path: output/*.zip
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v2
+        with:
+          name: rmac_rln-osx-10.15-${{ github.sha }}
+          path: output/*.zip
 
