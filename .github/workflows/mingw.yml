@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         include: [
-          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_package_name: mingw-w64-i686-gcc, gcc_name: x86_64-w64-mingw32-gcc },
+          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_package_name: mingw-w64-x86_64-gcc, gcc_name: x86_64-w64-mingw32-gcc },
           { msystem: MINGW32, toolchain: mingw-w64-i686-toolchain, gcc_package_name: mingw-w64-i686-gcc, gcc_name: i686-w64-mingw32-gcc  },
         ]
     steps:
@@ -47,6 +47,6 @@ jobs:
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v2
         with:
-          name: rmac_rln-osx-10.15-${{ github.sha }}
+          name: rmac_rln-mingw-${{ github.sha }}
           path: output/*.zip
 
