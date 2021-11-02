@@ -9,8 +9,8 @@ jobs:
       fail-fast: false
       matrix:
         include: [
-          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_name: mingw-w64-i686-gcc },
-          { msystem: MINGW32, toolchain: mingw-w64-i686-toolchain, gcc_name: mingw-w64-i686-gcc  },
+          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_name: x86_64-w64-mingw32-gcc },
+          { msystem: MINGW32, toolchain: mingw-w64-i686-toolchain, gcc_name: i686-w64-mingw32-gcc  },
         ]
     steps:
 
