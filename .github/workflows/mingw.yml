@@ -9,15 +9,15 @@ jobs:
       fail-fast: false
       matrix:
         include: [
-          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_name: x86_64-w64-mingw32-gcc },
-          { msystem: MINGW32, toolchain: mingw-w64-i686-toolchain, gcc_name: i686-w64-mingw32-gcc  },
+          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_package_name: mingw-w64-i686-gcc, gcc_name: x86_64-w64-mingw32-gcc },
+          { msystem: MINGW32, toolchain: mingw-w64-i686-toolchain, gcc_package_name: mingw-w64-i686-gcc, gcc_name: i686-w64-mingw32-gcc  },
         ]
     steps:
 
       - uses: msys2/setup-msys2@v2
         with:
           msystem: ${{ matrix.msystem }}
-          install: zip VCS binutils pactoys-git ${{ matrix.gcc_name }} make
+          install: zip VCS binutils pactoys-git ${{ matrix.gcc_package_name }} make
           #${{ matrix.toolchain }} base-devel 
 
       - name: "Build all the things"
