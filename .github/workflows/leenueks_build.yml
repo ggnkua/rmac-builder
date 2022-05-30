@@ -1,14 +1,16 @@
 name: rmac-build-alpine
 on:
   workflow_dispatch:
+
 jobs:
   build_leenueks:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
+
       - name: Setup latest Alpine Linux
-      - uses: jirutka/setup-alpine@v1
+        uses: jirutka/setup-alpine@v1
         with:
           packages: >
             gcc
@@ -17,7 +19,8 @@ jobs:
             musl-dev
             git
             zip
-        shell: alpine.sh --root {0}
+
+      - shell: alpine.sh --root {0}
         run: |
             git clone http://shamusworld.gotdns.org/git/rmac
             git clone http://shamusworld.gotdns.org/git/rln
