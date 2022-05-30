@@ -1,0 +1,48 @@
+name: rmac-build-alpine
+on:
+  workflow_dispatch:
+jobs:
+  build_leenueks:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+
+      - name: Setup latest Alpine Linux
+      - uses: jirutka/setup-alpine@v1
+        with:
+          packages: >
+            gcc
+            binutils
+            make
+            musl-dev
+            git
+            zip
+        shell: alpine.sh --root {0}
+        run: |
+            git clone http://shamusworld.gotdns.org/git/rmac
+            git clone http://shamusworld.gotdns.org/git/rln
+            mkdir output
+            cd rmac
+            sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
+            make -j8
+            strip rmac
+            mv rmac ../output
+            cd ../rln
+            sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
+            make -j8
+            strip rln
+            mv rln ../output            
+
+      - name: zip outputs
+        shell: alpine.sh --root {0}
+        run: |
+          cd output
+          zip -r rmac-rln-linux.zip rmac rln
+
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v2
+        with:
+          name: rmac_rln-mingw-${{ github.sha }}
+          path: output/*.zip
+
