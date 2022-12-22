@@ -1,6 +1,7 @@
 name: rmac-build-mingw
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   build_mingw:

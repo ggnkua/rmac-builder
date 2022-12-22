@@ -1,7 +1,8 @@
 name: rmac-build-alpine
 on:
   workflow_dispatch:
-
+  push:
+  
 jobs:
   build_leenueks:
     runs-on: ubuntu-latest
