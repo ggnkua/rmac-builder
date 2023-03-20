@@ -44,7 +44,7 @@ jobs:
           zip -r rmac-osx-11.zip rmac
           zip -r rln-osx-11.zip rln
       - name: "Upload artifacts"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rmac_rln-osx-11-${{ github.sha }}
           path: rmac/output/*.zip

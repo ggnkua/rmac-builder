@@ -45,7 +45,7 @@ jobs:
           zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
 
       - name: "Upload artifacts"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rmac_rln-mingw-${{ github.sha }}
           path: output/*.zip
