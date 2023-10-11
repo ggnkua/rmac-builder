@@ -40,9 +40,9 @@ jobs:
         run: |
           7z a rmac_x64.zip rmac.exe
 
-      - name: "Upload artifacts"
-        uses: actions/upload-artifact@v3
-        with:
-          name: rmac_rln-vs-${{ github.sha }}
-          path: *.zip
+#      - name: "Upload artifacts"
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: rmac_rln-vs-${{ github.sha }}
+#          path: *.zip
 
