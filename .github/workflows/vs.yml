@@ -27,6 +27,9 @@ jobs:
           @rem strip rln.exe
           @rem mv rln.exe ../output
 
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
       - name: "Build x86"
         run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x86 /t:restore
 
