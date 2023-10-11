@@ -11,6 +11,7 @@ jobs:
     steps:
 
       - name: "Clone all the things"
+        shell: cmd
         run: |
           git clone http://shamusworld.gotdns.org/git/rmac
           git clone http://shamusworld.gotdns.org/git/rln
@@ -30,6 +31,7 @@ jobs:
         run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x86 /t:restore
 
       - name: zip x86
+        shell: cmd
         run: |
           7z a rmac_x86.zip rmac.exe
         
@@ -37,6 +39,7 @@ jobs:
         run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x64 /t:restore
         
       - name: zip x64
+        shell: cmd
         run: |
           7z a rmac_x64.zip rmac.exe
 
