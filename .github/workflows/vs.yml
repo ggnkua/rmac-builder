@@ -10,12 +10,21 @@ jobs:
       fail-fast: false
     steps:
 
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
       - name: "Clone all the things"
         shell: cmd
         run: |
           git clone http://shamusworld.gotdns.org/git/rmac
           git clone http://shamusworld.gotdns.org/git/rln
-          mkdir output
+          echo x86
+          msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x86 /t:restore
+          7z a rmac_x86.zip rmac.exe
+          echo x64
+          msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x64 /t:restore
+          7z a rmac_x86.zip rmac.exe
+          @rem mkdir output
           @rem cd rmac
           @rem sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
           @rem make -j2
@@ -27,24 +36,7 @@ jobs:
           @rem strip rln.exe
           @rem mv rln.exe ../output
 
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
 
-      - name: "Build x86"
-        run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x86 /t:restore
-
-      - name: zip x86
-        shell: cmd
-        run: |
-          7z a rmac_x86.zip rmac.exe
-        
-      - name: "Build x64"
-        run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x64 /t:restore
-        
-      - name: zip x64
-        shell: cmd
-        run: |
-          7z a rmac_x64.zip rmac.exe
 
 #      - name: "Upload artifacts"
 #        uses: actions/upload-artifact@v3
