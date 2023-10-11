@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  build_mingw:
+  build_vs:
     runs-on: windows-2019
     strategy:
       fail-fast: false
