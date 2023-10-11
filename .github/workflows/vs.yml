@@ -1,0 +1,48 @@
+name: rmac-build-vs
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build_mingw:
+    runs-on: windows-2019
+    strategy:
+      fail-fast: false
+    steps:
+
+      - name: "Clone all the things"
+        run: |
+          git clone http://shamusworld.gotdns.org/git/rmac
+          git clone http://shamusworld.gotdns.org/git/rln
+          mkdir output
+          @rem cd rmac
+          @rem sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
+          @rem make -j2
+          @rem strip rmac.exe
+          @rem mv rmac.exe ../output
+          @rem cd ../rln
+          @rem sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
+          @rem make -j2
+          @rem strip rln.exe
+          @rem mv rln.exe ../output
+
+      - name: "Build x86"
+        run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x86 /t:restore
+
+      - name: zip x86
+        run: |
+          7z a rmac_x86.zip rmac.exe
+        
+      - name: "Build x64"
+        run: msbuild 'Vs2015/VS2015.sln' /p:configuration=Release /p:platform=x64 /t:restore
+        
+      - name: zip x64
+        run: |
+          7z a rmac_x64.zip rmac.exe
+
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v3
+        with:
+          name: rmac_rln-vs-${{ github.sha }}
+          path: *.zip
+
