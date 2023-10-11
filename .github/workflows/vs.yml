@@ -19,10 +19,10 @@ jobs:
           git clone http://shamusworld.gotdns.org/git/rmac
           git clone http://shamusworld.gotdns.org/git/rln
           echo x86
-          msbuild 'Vs2015\VS2015.sln' /p:configuration=Release /p:platform=x86 /t:restore
+          msbuild "Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x86 /t:restore
           7z a rmac_x86.zip rmac.exe
           echo x64
-          msbuild 'Vs2015\VS2015.sln' /p:configuration=Release /p:platform=x64 /t:restore
+          msbuild "Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x64 /t:restore
           7z a rmac_x86.zip rmac.exe
           @rem mkdir output
           @rem cd rmac
