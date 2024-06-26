@@ -1,0 +1,44 @@
+# Macos Build
+
+name: rmac-build-osx10.15
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  push:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build_osx_11:
+    # The type of runner that the job will run on
+    runs-on: macos-10.15
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs a set of commands using the runners shell
+      - name: Do the work
+        run: |
+          git clone http://shamusworld.gotdns.org/git/rmac
+          cd rmac
+          mkdir output
+          make -j 3
+          strip rmac
+          mv rmac output
+          cd ..
+          git clone http://shamusworld.gotdns.org/git/rln
+          cd rln
+          make -j 3
+          strip rln
+          mv rln ../rmac/output
+      - name: zip outputs
+        run: |
+          cd rmac/output
+          zip -r rmac-osx-10.15.zip rmac
+          zip -r rln-osx-10.15.zip rln
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v3
+        with:
+          name: rmac_rln-osx-10.15-${{ github.sha }}
+          path: rmac/output/*.zip

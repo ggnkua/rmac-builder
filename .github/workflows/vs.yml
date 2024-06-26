@@ -26,7 +26,7 @@ jobs:
         run: |
           git clone http://shamusworld.gotdns.org/git/rmac
           git clone http://shamusworld.gotdns.org/git/rln
-          curl https://github.com/tronkko/dirent/blob/master/include/dirent.h --output dirent.h
+          @rem curl https://github.com/tronkko/dirent/blob/master/include/dirent.h --output dirent.h
           echo x86
           msbuild "rmac\Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x86
           7z a rmac_x86.zip rmac.exe

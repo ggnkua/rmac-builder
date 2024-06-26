@@ -1,0 +1,50 @@
+# Macos Build
+
+name: rmac-build-osx11
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  push:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build_osx_11:
+    # The type of runner that the job will run on
+    runs-on: macos-11
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs a set of commands using the runners shell
+      - name: Do the work
+        run: |
+          git clone http://shamusworld.gotdns.org/git/rmac
+          cd rmac
+          mkdir output
+          # Apply the secret sauce
+          sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
+          sed -i -e "s/\$(HOSTCC) \$(CFLAGS)/\$(HOSTCC)/g" makefile
+          make -j 3
+          file rmac
+          strip rmac
+          mv rmac output
+          cd ..
+          git clone http://shamusworld.gotdns.org/git/rln
+          cd rln
+          sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
+          make -j 3
+          file rln
+          strip rln
+          mv rln ../rmac/output
+      - name: zip outputs
+        run: |
+          cd rmac/output
+          zip -r rmac-osx-11.zip rmac
+          zip -r rln-osx-11.zip rln
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v3
+        with:
+          name: rmac_rln-osx-11-${{ github.sha }}
+          path: rmac/output/*.zip
