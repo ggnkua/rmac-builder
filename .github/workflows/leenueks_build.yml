@@ -83,12 +83,9 @@ jobs:
             make -j8
             strip rln
             mv rln ../output
+            cd ../output
+            zip -r rmac-rln-linux.zip rmac rln
 
-      - name: zip outputs
-        run: |
-          cd output
-          zip -r rmac-rln-linux.zip rmac rln
-            
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v4
         with:
