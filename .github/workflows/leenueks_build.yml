@@ -35,7 +35,7 @@ jobs:
             sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
             make -j8
             strip rln
-            mv rln ../output            
+            mv rln ../output
 
       - name: zip outputs
         shell: alpine.sh --root {0}
@@ -46,6 +46,45 @@ jobs:
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v3
         with:
-          name: rmac_rln-linux-${{ github.sha }}
+          name: rmac_rln-linux-x64-${{ github.sha }}
+          path: output/*.zip
+
+  armv7_job:
+    # The host should always be Linux
+    runs-on: ubuntu-22.04
+    name: Build on ubuntu-22.04 armv7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run commands
+        id: runcmd
+        with:
+          arch: armv7
+          distro: ubuntu22.04
+
+          # Not required, but speeds up builds by storing container images in
+          # a GitHub package registry.
+          #githubToken: ${{ github.token }}
+
+          # Set an output parameter `uname` for use in subsequent steps
+          run: |
+            git clone http://shamusworld.gotdns.org/git/rmac
+            git clone http://shamusworld.gotdns.org/git/rln
+            mkdir output
+            cd rmac
+            sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
+            make -j8
+            strip rmac
+            mv rmac ../output
+            cd ../rln
+            sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
+            make -j8
+            strip rln
+            mv rln ../output
+
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v3
+        with:
+          name: rmac_rln-linux-aarch64-${{ github.sha }}
           path: output/*.zip
 
