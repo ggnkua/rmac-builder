@@ -68,6 +68,8 @@ jobs:
 
           # Set an output parameter `uname` for use in subsequent steps
           run: |
+            apt-get update -q -y
+            apt-get install -q -y git gcc make
             git clone http://shamusworld.gotdns.org/git/rmac
             git clone http://shamusworld.gotdns.org/git/rln
             mkdir output
