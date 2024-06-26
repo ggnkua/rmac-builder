@@ -84,6 +84,12 @@ jobs:
             strip rln
             mv rln ../output
 
+      - name: zip outputs
+        shell: alpine.sh --root {0}
+        run: |
+          cd output
+          zip -r rmac-rln-linux.zip rmac rln
+            
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v4
         with:
