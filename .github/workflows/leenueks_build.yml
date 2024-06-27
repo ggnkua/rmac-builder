@@ -37,17 +37,23 @@ jobs:
             strip rln
             mv rln ../output
 
-      - name: zip outputs
-        shell: alpine.sh --root {0}
-        run: |
-          cd output
-          zip -r rmac-rln-linux.zip rmac rln
+            #      - name: zip outputs
+            #        shell: alpine.sh --root {0}
+            #        run: |
+            #          cd output
+            #          zip -r rmac-rln-linux.zip rmac rln
 
-      - name: "Upload artifacts"
+      - name: "Upload rmac"
         uses: actions/upload-artifact@v4
         with:
-          name: rmac_rln-linux-x64-${{ github.sha }}
-          path: output/*.zip
+          name: rmac_linux-x64-${{ github.sha }}
+          path: output/rmac
+
+      - name: "Upload rln"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rln-linux-x64-${{ github.sha }}
+          path: output/rln
 
   armv7_job:
     # The host should always be Linux
@@ -83,12 +89,19 @@ jobs:
             make -j8
             strip rln
             mv rln ../output
-            cd ../output
-            zip -r rmac-rln-linux.zip rmac rln
+            #cd ../output
+            #zip -r rmac-rln-linux.zip rmac rln
 
-      - name: "Upload artifacts"
+      - name: "Upload rmac"
         uses: actions/upload-artifact@v4
         with:
-          name: rmac_rln-linux-aarch64-${{ github.sha }}
-          path: output/*.zip
+          name: rmac_linux-aarch64-${{ github.sha }}
+          path: output/rmac
 
+      - name: "Upload rln"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rln-linux-aarch64-${{ github.sha }}
+          path: output/rln
+
+          
