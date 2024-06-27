@@ -38,15 +38,22 @@ jobs:
           strip rln.exe
           mv rln.exe ../output
 
-      - name: zip outputs
-        shell: msys2 {0}
-        run: |
-          cd output
-          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
+          #      - name: zip outputs
+          #        shell: msys2 {0}
+          #        run: |
+          #          cd output
+          #          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
 
-      - name: "Upload artifacts"
-        uses: actions/upload-artifact@v3
+      - name: "Upload rmac ${{ matrix.gcc_name }}"
+        uses: actions/upload-artifact@v4
         with:
-          name: rmac_rln-mingw-${{ github.sha }}
-          path: output/*.zip
+          name: rmac_${{ matrix.gcc_name }}-${{ github.sha }}
+          path: output/rmac.exe
+
+      - name: "Upload rln ${{ matrix.gcc_name }}"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rln-${{ matrix.gcc_name }}-${{ github.sha }}
+          path: output/rln.exe
+
 

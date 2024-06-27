@@ -38,13 +38,20 @@ jobs:
           file rln
           strip rln
           mv rln ../rmac/output
-      - name: zip outputs
-        run: |
-          cd rmac/output
-          zip -r rmac-osx-11.zip rmac
-          zip -r rln-osx-11.zip rln
-      - name: "Upload artifacts"
-        uses: actions/upload-artifact@v3
+          #      - name: zip outputs
+          #        run: |
+          #          cd rmac/output
+          #          zip -r rmac-osx-11.zip rmac
+          #          zip -r rln-osx-11.zip rln
+
+      - name: "Upload rmac"
+        uses: actions/upload-artifact@v4
         with:
-          name: rmac_rln-osx-11-${{ github.sha }}
-          path: rmac/output/*.zip
+          name: rmac_osx-11-${{ github.sha }}
+          path: rmac/output/rmac
+
+      - name: "Upload rln"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rln-osx-11-${{ github.sha }}
+          path: rmac/output/rln
