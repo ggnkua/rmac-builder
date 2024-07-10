@@ -38,13 +38,13 @@ jobs:
           7z a ..\rmac_x64.zip rmac.exe
           cd ..
           echo ------------------------------------------------------x86 rln
-          msbuild "rln\VS2015\rln.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
+          msbuild "rln\VS2015\VS2015.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
           cd rln
           7z a ..\rln_x86.zip rln.exe
           cd ..
           echo ------------------------------------------------------x64 rln
           del rmac.exe
-          msbuild "rln\VS2015\rln.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
+          msbuild "rln\VS2015\VS2015.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
           cd rmac
           7z a ..\rmac_x64.zip rln.exe
           cd ..
