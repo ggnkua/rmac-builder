@@ -38,7 +38,7 @@ jobs:
           7z a ..\rmac_x64.zip rmac.exe
           cd ..
           echo ------------------------------------------------------x86 rln
-          curl https://github.com/tronkko/dirent/blob/master/include/dirent.h --output rln\dirent.h
+          curl https://raw.githubusercontent.com/tronkko/dirent/master/include/dirent.h --output rln\dirent.h
           msbuild "rln\VS2015\VS2015.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
           cd rln
           7z a ..\rln_x86.zip rln.exe
