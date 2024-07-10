@@ -53,5 +53,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rmac_rln-vs-${{ github.sha }}
-          path: *.zip
+          path: .
 
