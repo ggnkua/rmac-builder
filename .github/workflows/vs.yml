@@ -25,31 +25,33 @@ jobs:
         shell: cmd
         run: |
           git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-          @rem curl https://github.com/tronkko/dirent/blob/master/include/dirent.h --output dirent.h
-          echo x86
+          git clone http://tiddly.mooo.com:5000/rln/rln.git
+          echo ------------------------------------------------------x86 rmac
           msbuild "rmac\Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
-          7z a rmac_x86.zip rmac.exe
-          echo x64
+          cd rmac
+          7z a ..\rmac_x86.zip rmac.exe
+          cd ..
+          echo ------------------------------------------------------x64 rmac
+          del rmac.exe
           msbuild "rmac\Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
-          7z a rmac_x86.zip rmac.exe
-          @rem mkdir output
-          @rem cd rmac
-          @rem sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
-          @rem make -j2
-          @rem strip rmac.exe
-          @rem mv rmac.exe ../output
-          @rem cd ../rln
-          @rem sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
-          @rem make -j2
-          @rem strip rln.exe
-          @rem mv rln.exe ../output
+          cd rmac
+          7z a ..\rmac_x64.zip rmac.exe
+          cd ..
+          echo ------------------------------------------------------x86 rln
+          msbuild "rln\VS\rln.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
+          cd rln
+          7z a ..\rln_x86.zip rln.exe
+          cd ..
+          echo ------------------------------------------------------x64 rln
+          del rmac.exe
+          msbuild "rln\VS\rln.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
+          cd rmac
+          7z a ..\rmac_x64.zip rln.exe
+          cd ..
 
-
-
-#      - name: "Upload artifacts"
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: rmac_rln-vs-${{ github.sha }}
-#          path: *.zip
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rmac_rln-vs-${{ github.sha }}
+          path: *.zip
 
