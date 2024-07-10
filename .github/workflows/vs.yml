@@ -21,7 +21,7 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: "Clone all the things"
+      - name: "Clone and build all the things"
         shell: cmd
         run: |
           git clone http://tiddly.mooo.com:5000/rmac/rmac.git
