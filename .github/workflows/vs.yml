@@ -47,12 +47,12 @@ jobs:
           del rmac.exe
           msbuild "rln\VS2015\VS2015.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
           cd rmac
-          7z a ..\rmac_x64.zip rln.exe
+          7z a ..\rln_x64.zip rln.exe
           cd ..
 
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v4
         with:
           name: rmac_rln-vs-${{ github.sha }}
-          path: .
+          path: *
 
