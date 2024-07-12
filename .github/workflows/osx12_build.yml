@@ -1,6 +1,6 @@
 # Macos Build
 
-name: rmac-build-osx11
+name: rmac-build-osx12
 
 # Controls when the workflow will run
 on:
@@ -11,16 +11,16 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build_osx_11:
+  build_osx_12:
     # The type of runner that the job will run on
-    runs-on: macos-11
+    runs-on: macos-12
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a set of commands using the runners shell
       - name: Do the work
         run: |
-          git clone http://shamusworld.gotdns.org/git/rmac
+          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
           cd rmac
           mkdir output
           # Apply the secret sauce
@@ -31,27 +31,22 @@ jobs:
           strip rmac
           mv rmac output
           cd ..
-          git clone http://shamusworld.gotdns.org/git/rln
+          git clone http://tiddly.mooo.com:5000/rln/rln.git
           cd rln
           sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
           make -j 3
           file rln
           strip rln
           mv rln ../rmac/output
-          #      - name: zip outputs
-          #        run: |
-          #          cd rmac/output
-          #          zip -r rmac-osx-11.zip rmac
-          #          zip -r rln-osx-11.zip rln
 
       - name: "Upload rmac"
         uses: actions/upload-artifact@v4
         with:
-          name: rmac_osx-11-${{ github.sha }}
+          name: rmac_osx-12-${{ github.sha }}
           path: rmac/output/rmac
 
       - name: "Upload rln"
         uses: actions/upload-artifact@v4
         with:
-          name: rln-osx-11-${{ github.sha }}
+          name: rln-osx-12-${{ github.sha }}
           path: rmac/output/rln

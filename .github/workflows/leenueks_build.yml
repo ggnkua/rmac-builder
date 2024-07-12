@@ -23,8 +23,8 @@ jobs:
 
       - shell: alpine.sh --root {0}
         run: |
-            git clone http://shamusworld.gotdns.org/git/rmac
-            git clone http://shamusworld.gotdns.org/git/rln
+            git clone http://tiddly.mooo.com:5000/rmac/rmac.git
+            git clone http://tiddly.mooo.com:5000/rln/rln.git
             mkdir output
             cd rmac
             sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
@@ -76,8 +76,8 @@ jobs:
           run: |
             apt-get update -q -y
             apt-get install -q -y git gcc make zip
-            git clone http://shamusworld.gotdns.org/git/rmac
-            git clone http://shamusworld.gotdns.org/git/rln
+            git clone http://tiddly.mooo.com:5000/rmac/rmac.git
+            git clone http://tiddly.mooo.com:5000/rln/rln.git
             mkdir output
             cd rmac
             sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
