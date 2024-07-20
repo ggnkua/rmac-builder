@@ -33,12 +33,12 @@ jobs:
             git clone http://tiddly.mooo.com:5000/rln/rln.git
             mkdir output
             cd rmac
-            sed -i -e "s/gcc/cosmocc/gI" makefile
+            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
             make -j8
             strip rmac
             mv rmac ../output
             cd ../rln
-            sed -i -e "s/gcc/cosmocc/gI" makefile
+            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
             make -j8
             strip rln
             mv rln ../output
@@ -86,12 +86,12 @@ jobs:
             git clone http://tiddly.mooo.com:5000/rln/rln.git
             mkdir output
             cd rmac
-            sed -i -e "s/gcc/cosmocc/gI" makefile
+            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
             make -j8
             strip rmac
             mv rmac ../output
             cd ../rln
-            sed -i -e "s/gcc/cosmocc/gI" makefile
+            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
             make -j8
             strip rln
             mv rln ../output
