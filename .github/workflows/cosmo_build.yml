@@ -27,6 +27,7 @@ jobs:
             cd cosmocc
             wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
             unzip cosmocc.zip
+            cd ..
             export PATH=$PATH:$PWD/cosmocc/bin
             git clone http://tiddly.mooo.com:5000/rmac/rmac.git
             git clone http://tiddly.mooo.com:5000/rln/rln.git
@@ -79,6 +80,7 @@ jobs:
             cd cosmocc
             wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
             unzip cosmocc.zip
+            cd ..
             export PATH=$PATH:$PWD/cosmocc/bin
             git clone http://tiddly.mooo.com:5000/rmac/rmac.git
             git clone http://tiddly.mooo.com:5000/rln/rln.git
