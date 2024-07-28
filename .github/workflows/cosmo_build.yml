@@ -10,19 +10,7 @@ jobs:
       fail-fast: false
     steps:
 
-      - name: Setup latest Alpine Linux
-        uses: jirutka/setup-alpine@v1
-        with:
-          packages: >
-            gcc
-            binutils
-            make
-            musl-dev
-            git
-            zip
-
-      - shell: alpine.sh --root {0}
-        run: |
+      - run: |
             mkdir -p cosmocc
             cd cosmocc
             wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
@@ -34,12 +22,12 @@ jobs:
             mkdir output
             cd rmac
             sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
-            make -j8
+            make -j2
             strip rmac
             mv rmac ../output
             cd ../rln
             sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
-            make -j8
+            make -j2
             strip rln
             mv rln ../output
 
@@ -55,59 +43,3 @@ jobs:
           name: rln_cosmo-x64-${{ github.sha }}
           path: output/rln
 
-  armv7_job:
-    # The host should always be Linux
-    runs-on: ubuntu-22.04
-    name: Build on ubuntu-22.04 armv7
-    steps:
-      - uses: actions/checkout@v4
-      - uses: uraimo/run-on-arch-action@v2
-        name: Run commands
-        id: runcmd
-        with:
-          arch: aarch64
-          distro: ubuntu22.04
-
-          # Not required, but speeds up builds by storing container images in
-          # a GitHub package registry.
-          #githubToken: ${{ github.token }}
-
-          # Set an output parameter `uname` for use in subsequent steps
-          run: |
-            #apt-get update -q -y
-            #apt-get install -q -y git gcc make zip
-            mkdir -p cosmocc
-            cd cosmocc
-            wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
-            unzip cosmocc.zip
-            cd ..
-            export PATH=$PATH:$PWD/cosmocc/bin
-            git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-            git clone http://tiddly.mooo.com:5000/rln/rln.git
-            mkdir output
-            cd rmac
-            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
-            make -j8
-            strip rmac
-            mv rmac ../output
-            cd ../rln
-            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
-            make -j8
-            strip rln
-            mv rln ../output
-            #cd ../output
-            #zip -r rmac-rln-linux.zip rmac rln
-
-      - name: "Upload rmac"
-        uses: actions/upload-artifact@v4
-        with:
-          name: rmac_cosmo-aarch64-${{ github.sha }}
-          path: output/rmac
-
-      - name: "Upload rln"
-        uses: actions/upload-artifact@v4
-        with:
-          name: rln_cosmo-aarch64-${{ github.sha }}
-          path: output/rln
-
-          
