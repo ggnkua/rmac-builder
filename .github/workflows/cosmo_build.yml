@@ -11,12 +11,21 @@ jobs:
     steps:
 
       - run: |
+            # From https://github.com/jart/cosmopolitan?tab=readme-ov-file#linux
+            sudo wget -O /usr/bin/ape https://cosmo.zip/pub/cosmos/bin/ape-$(uname -m).elf
+            sudo chmod +x /usr/bin/ape
+            sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
+            sudo sh -c "echo ':APE-jart:M::jartsr::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
+
+            # Set up cosmocc
             mkdir -p cosmocc
             cd cosmocc
             wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
             unzip cosmocc.zip
-            cd ..
+            cd ..            
             export PATH=$PATH:$PWD/cosmocc/bin
+
+            # Get our source and build it
             git clone http://tiddly.mooo.com:5000/rmac/rmac.git
             git clone http://tiddly.mooo.com:5000/rln/rln.git
             mkdir output
