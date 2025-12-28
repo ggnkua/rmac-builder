@@ -1,0 +1,62 @@
+name: rmac-build-st
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build_mingw:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: [
+          { msystem: MINGW64, toolchain: mingw-w64-x86_64-toolchain, gcc_package_name: mingw-w64-x86_64-gcc, gcc_name: x86_64-w64-mingw32-gcc },
+        ]
+    steps:
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          install: zip VCS binutils pactoys-git mingw-w64-x86_64-toolchain make mingw-w64-x86_64-7zip
+
+      - uses: actions/checkout@v2
+          
+      - name: "Build all the things"
+        shell: msys2 {0}
+        run: |
+          set -x
+          #ls -la 
+          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
+          git clone http://tiddly.mooo.com:5000/rln/rln.git
+          mkdir output
+          cd rmac
+          7z x ../browncc11.1.7z
+          #ls -la ..
+          mv ../libm.a .
+          make -f makefile.st
+          mv rmac.ttp ../output
+          #cd ../rln
+          #sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
+          #make -j2
+          #strip rln.exe
+          #mv rln.exe ../output
+
+          #      - name: zip outputs
+          #        shell: msys2 {0}
+          #        run: |
+          #          cd output
+          #          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
+
+      - name: "Upload rmac"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rmac_-${{ github.sha }}
+          path: output/rmac.ttp
+
+     #- name: "Upload rln ${{ matrix.gcc_name }}"
+     #  uses: actions/upload-artifact@v4
+     #  with:
+     #    name: rln-${{ matrix.gcc_name }}-${{ github.sha }}
+     #    path: output/rln.exe
+
+
