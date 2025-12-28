@@ -27,14 +27,14 @@ jobs:
           git clone http://tiddly.mooo.com:5000/rmac/rmac.git
           git clone http://tiddly.mooo.com:5000/rln/rln.git
           echo ------------------------------------------------------x86 rmac
-          msbuild "rmac\Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
           cd rmac
+          msbuild "rmac.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
           7z a ..\rmac_x86.zip rmac.exe
           cd ..
           echo ------------------------------------------------------x64 rmac
           @rem del rmac.exe
-          msbuild "rmac\Vs2015\VS2015.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
           cd rmac
+          msbuild "rmac.sln" /p:configuration=Release /p:platform=x64 /p:PlatformToolset=v142
           7z a ..\rmac_x64.zip rmac.exe
           cd ..
           echo ------------------------------------------------------x86 rln
