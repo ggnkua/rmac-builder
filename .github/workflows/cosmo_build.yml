@@ -32,12 +32,12 @@ jobs:
             cd rmac
             sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
             make -j2
-            strip rmac
+            #strip rmac
             mv rmac ../output
             cd ../rln
             sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
             make -j2
-            strip rln
+            #strip rln
             mv rln ../output
 
       - name: "Upload rmac"
