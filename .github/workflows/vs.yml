@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_vs:
-    runs-on: windows-2019
+    runs-on: windows-2025
     strategy:
       fail-fast: false
     steps:
@@ -24,8 +24,8 @@ jobs:
       - name: "Clone and build all the things"
         shell: cmd
         run: |
-          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-          git clone http://tiddly.mooo.com:5000/rln/rln.git
+          git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
+          git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
           echo ------------------------------------------------------x86 rmac
           cd rmac
           msbuild "rmac.sln" /p:configuration=Release /p:platform=x86 /p:PlatformToolset=v142
@@ -51,7 +51,7 @@ jobs:
           cd ..
 
       - name: "Upload artifacts"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_rln-vs-${{ github.sha }}
           path: ./*.zip

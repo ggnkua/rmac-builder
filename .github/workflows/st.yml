@@ -26,8 +26,8 @@ jobs:
         run: |
           set -x
           #ls -la 
-          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-          git clone http://tiddly.mooo.com:5000/rln/rln.git
+          git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
+          git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
           mkdir output
           cd rmac
           7z x ../browncc11.1.7z
@@ -48,7 +48,7 @@ jobs:
           #          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
 
       - name: "Upload rmac"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_-${{ github.sha }}
           path: output/rmac.ttp

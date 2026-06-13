@@ -21,13 +21,13 @@ jobs:
             mkdir -p cosmocc
             cd cosmocc
             wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
-            unzip cosmocc.zip
+            unzip -q cosmocc.zip
             cd ..            
             export PATH=$PATH:$PWD/cosmocc/bin
 
             # Get our source and build it
-            git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-            git clone http://tiddly.mooo.com:5000/rln/rln.git
+            git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
+            git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
             mkdir output
             cd rmac
             sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
@@ -35,19 +35,19 @@ jobs:
             #strip rmac
             mv rmac ../output
             cd ../rln
-            sed -i -e "s/(CROSS)gcc/(CROSS)cosmocc/gI" makefile
+            sed -i -e "s/\$(CC)/cosmocc/gI" makefile
             make -j2
             #strip rln
             mv rln ../output
 
       - name: "Upload rmac"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_cosmo-x64-${{ github.sha }}
           path: output/rmac
 
       - name: "Upload rln"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rln_cosmo-x64-${{ github.sha }}
           path: output/rln

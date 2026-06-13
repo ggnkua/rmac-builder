@@ -24,8 +24,8 @@ jobs:
       - name: "Build all the things"
         shell: msys2 {0}
         run: |
-          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-          git clone http://tiddly.mooo.com:5000/rln/rln.git
+          git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
+          git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
           mkdir output
           cd rmac
           sed -i "s/gcc$/${{ matrix.gcc_name }}/g" makefile
@@ -45,13 +45,13 @@ jobs:
           #          zip -r rmac-rln-${{ matrix.msystem }}.zip rmac.exe rln.exe
 
       - name: "Upload rmac ${{ matrix.gcc_name }}"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_${{ matrix.gcc_name }}-${{ github.sha }}
           path: output/rmac.exe
 
       - name: "Upload rln ${{ matrix.gcc_name }}"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rln-${{ matrix.gcc_name }}-${{ github.sha }}
           path: output/rln.exe

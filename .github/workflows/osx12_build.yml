@@ -20,7 +20,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Do the work
         run: |
-          git clone http://tiddly.mooo.com:5000/rmac/rmac.git
+          git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
           cd rmac
           mkdir output
           # Apply the secret sauce
@@ -31,7 +31,7 @@ jobs:
           strip rmac
           mv rmac output
           cd ..
-          git clone http://tiddly.mooo.com:5000/rln/rln.git
+          git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
           cd rln
           sed -i -e "s/CFLAGS = /CFLAGS = -target arm64-apple-macos11/g" makefile
           make -f makefile.mac
@@ -40,13 +40,13 @@ jobs:
           mv rln ../rmac/output
 
       - name: "Upload rmac"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_osx-12-${{ github.sha }}
           path: rmac/output/rmac
 
       - name: "Upload rln"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rln-osx-12-${{ github.sha }}
           path: rmac/output/rln

@@ -23,8 +23,8 @@ jobs:
 
       - shell: alpine.sh --root {0}
         run: |
-            git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-            git clone http://tiddly.mooo.com:5000/rln/rln.git
+            git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
+            git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
             mkdir output
             cd rmac
             sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
@@ -44,29 +44,29 @@ jobs:
             #          zip -r rmac-rln-linux.zip rmac rln
 
       - name: "Upload rmac"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_linux-x64-${{ github.sha }}
           path: output/rmac
 
       - name: "Upload rln"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rln-linux-x64-${{ github.sha }}
           path: output/rln
 
   armv7_job:
     # The host should always be Linux
-    runs-on: ubuntu-22.04
-    name: Build on ubuntu-22.04 armv7
+    runs-on: ubuntu-24.04-arm
+    name: Build on lolbuntu armv7
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: uraimo/run-on-arch-action@v2
         name: Run commands
         id: runcmd
         with:
           arch: aarch64
-          distro: ubuntu22.04
+          distro: ubuntu24.04
 
           # Not required, but speeds up builds by storing container images in
           # a GitHub package registry.
@@ -76,8 +76,8 @@ jobs:
           run: |
             apt-get update -q -y
             apt-get install -q -y git gcc make zip
-            git clone http://tiddly.mooo.com:5000/rmac/rmac.git
-            git clone http://tiddly.mooo.com:5000/rln/rln.git
+            git clone http://tiddly.mooo.com:5000/rmac/rmac.git --quiet
+            git clone http://tiddly.mooo.com:5000/rln/rln.git --quiet
             mkdir output
             cd rmac
             sed -i -e "s/CFLAGS = /CFLAGS = -static /gI" makefile
@@ -93,13 +93,13 @@ jobs:
             #zip -r rmac-rln-linux.zip rmac rln
 
       - name: "Upload rmac"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rmac_linux-aarch64-${{ github.sha }}
           path: output/rmac
 
       - name: "Upload rln"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@7
         with:
           name: rln-linux-aarch64-${{ github.sha }}
           path: output/rln
