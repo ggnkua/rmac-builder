@@ -19,7 +19,7 @@ jobs:
         shell: python
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v3
 
       - name: "Clone and build all the things"
         shell: cmd
