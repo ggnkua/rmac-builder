@@ -57,11 +57,11 @@ jobs:
 
   armv7_job:
     # The host should always be Linux
-    runs-on: ubuntu-24.04-arm
-    name: Build on lolbuntu armv7
+    runs-on: ubuntu-24.04
+    name: Build on lolbuntu aarch64
     steps:
       - uses: actions/checkout@v6
-      - uses: uraimo/run-on-arch-action@v2
+      - uses: uraimo/run-on-arch-action@v3
         name: Run commands
         id: runcmd
         with:
